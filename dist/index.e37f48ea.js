@@ -537,6 +537,7 @@ const controlRecipes = async function() {
         _recipeViewJsDefault.default.render(_modelJs.state.recipe);
     } catch (error) {
         console.log(error);
+        _recipeViewJsDefault.default.renderError();
     }
 };
 const init = function() {
@@ -2225,7 +2226,9 @@ const loadRecipe = async function(id) {
         };
         console.log(state.recipe);
     } catch (error) {
-        console.error(`${err} 💥💥💥💥`);
+        //console.error(`${error} 💥💥💥💥`);
+        recipeView.renderError(`${error} 💥💥💥💥`);
+        throw err;
     }
 };
 
@@ -2286,6 +2289,8 @@ var _fractional = require("fractional");
 class RecipeView {
     #parentElement = document.querySelector('.recipe');
     #data;
+    #errorMessage = 'We Could Not find that recipe.Please try another one!';
+    #message = '';
     render(data) {
         this.#data = data;
         const markup = this.#generateMarkup();
@@ -2295,6 +2300,30 @@ class RecipeView {
      #clear() {
         this.#parentElement.innerHTML = '';
     }
+    renderError = function(message = this.#errorMessage) {
+        const markup = `<div class="error">
+        <div>
+          <svg>
+            <use href="${_iconsSvgDefault.default}#icon-alert-triangle"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div> `;
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+    };
+    renderMessage = function(message = this.#message) {
+        const markup = `<div class="message">
+        <div>
+          <svg>
+            <use href="${_iconsSvgDefault.default}#icon-smile"></use>
+          </svg>
+        </div>
+        <p>${message}</p>
+      </div> `;
+        this.#clear();
+        this.#parentElement.insertAdjacentHTML('afterbegin', markup);
+    };
     renderSpinner = function() {
         const markup = `
         <div class="spinner">
@@ -2302,7 +2331,7 @@ class RecipeView {
             <use href="${_iconsSvgDefault.default}#icon-loader"></use>
           </svg>
         </div>`;
-        this.#parentElement.innerHTML = '';
+        this.#clear();
         this.#parentElement.insertAdjacentHTML('afterbegin', markup);
     };
     addHandlerRender(handler) {

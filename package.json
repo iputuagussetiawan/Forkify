@@ -10,7 +10,9 @@
   "author": "I Putu Agus Setiawan",
   "license": "ISC",
   "dependencies": {
-    "parcel": "^2.4.1"
+    "core-js": "^3.22.0",
+    "parcel": "^2.4.1",
+    "regenerator-runtime": "^0.13.9"
   },
   "devDependencies": {
     "@parcel/transformer-sass": "^2.4.1"

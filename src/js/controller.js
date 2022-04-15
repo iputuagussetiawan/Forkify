@@ -2,8 +2,13 @@ import icons from 'url:../img/icons.svg';
 import * as model from './model.js';
 import recipeView from './views/recipeView.js';
 import searchView from './views/searchView.js';
+import resultsView from './views/resultsView.js';
 import 'core-js/stable';
 import 'regenerator-runtime/runtime';
+
+if(module.hot){
+  module.hot.accept();
+}
 
 const controlRecipes= async function(){
   try {
@@ -28,10 +33,14 @@ const controlRecipes= async function(){
 
 const controlSearchResults = async function () {
   try {
+    resultsView.renderSpinner();
+    //1 load search result
     const query=searchView.getQuery();
     if(!query) return;
+    //2 load search result
     await model.loadSearchResults(query);
-    console.log(model.state.search.results);
+    //3 render result
+    resultsView.render(model.state.search.results)
   } catch (err) {
     console.log(err);
   }

@@ -515,8 +515,7 @@ function hmrAcceptRun(bundle, id) {
 
 },{}],"aenu9":[function(require,module,exports) {
 var parcelHelpers = require("@parcel/transformer-js/src/esmodule-helpers.js");
-var _webImmediateJs = require("core-js/modules/web.immediate.js"); // https://forkify-api.herokuapp.com/v2
- ///////////////////////////////////////
+var _webImmediateJs = require("core-js/modules/web.immediate.js");
 var _iconsSvg = require("url:../img/icons.svg");
 var _iconsSvgDefault = parcelHelpers.interopDefault(_iconsSvg);
 var _modelJs = require("./model.js");
@@ -540,10 +539,10 @@ const controlRecipes = async function() {
         console.log(error);
     }
 };
-// showRecipe();
-//['hashchange','load'].forEach(ev => window.addEventListener(ev,showRecipe));
-window.addEventListener('hashchange', controlRecipes);
-window.addEventListener('load', controlRecipes);
+const init = function() {
+    _recipeViewJsDefault.default.addHandlerRender(controlRecipes);
+};
+init();
 
 },{"@parcel/transformer-js/src/esmodule-helpers.js":"gkKU3","core-js/modules/web.immediate.js":"49tUX","regenerator-runtime/runtime":"dXNgZ","./model.js":"Y4A21","./views/recipeView.js":"l60JC","url:../img/icons.svg":"loVOp"}],"gkKU3":[function(require,module,exports) {
 exports.interopDefault = function(a) {
@@ -2306,6 +2305,13 @@ class RecipeView {
         this.#parentElement.innerHTML = '';
         this.#parentElement.insertAdjacentHTML('afterbegin', markup);
     };
+    addHandlerRender(handler) {
+        [
+            'hashchange',
+            'load'
+        ].forEach((ev)=>window.addEventListener(ev, handler)
+        );
+    }
      #generateMarkup() {
         console.log(this.#data);
         return `

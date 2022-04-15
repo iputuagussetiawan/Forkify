@@ -32,12 +32,8 @@ const controlRecipes= async function(){
   }
 }
 
-// showRecipe();
+const init= function(){
+  recipeView.addHandlerRender(controlRecipes);
+}
 
-//['hashchange','load'].forEach(ev => window.addEventListener(ev,showRecipe));
-window.addEventListener('hashchange', controlRecipes)
-window.addEventListener('load', controlRecipes)
-
-// https://forkify-api.herokuapp.com/v2
-
-///////////////////////////////////////
+init();

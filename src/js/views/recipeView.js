@@ -22,11 +22,13 @@ class RecipeView{
             <use href="${icons}#icon-loader"></use>
           </svg>
         </div>`;
-      
         this.#parentElement.innerHTML='';
         this.#parentElement.insertAdjacentHTML('afterbegin',markup);
-      
-      }
+    }
+    
+    addHandlerRender(handler) {
+        ['hashchange', 'load'].forEach(ev => window.addEventListener(ev, handler));
+    }
 
     #generateMarkup(){
         console.log(this.#data);
